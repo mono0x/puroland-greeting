@@ -22,8 +22,6 @@ const (
 )
 
 var (
-	SecretError = errors.New("the schedule is secret")
-
 	dateRe         = regexp.MustCompile(`(\d+)年(\d+)月(\d+)日(?:\([日月火水木金土]\))?`)
 	timeAndPlaceRe = regexp.MustCompile(`\A\s*([０-９]+)：([０-９]+)－([０-９]+)：([０-９]+)(.+)\s*\z`)
 )
@@ -31,6 +29,14 @@ var (
 type IndexPage struct {
 	Date        time.Time
 	MenuPageURL string
+}
+
+type SecretError struct {
+	Date time.Time
+}
+
+func (err *SecretError) Error() string {
+	return "" // unused
 }
 
 type MenuPage struct {
@@ -75,6 +81,11 @@ func ParseIndexPage(r io.Reader) (*IndexPage, error) {
 		return nil, err
 	}
 
+	date, err := parseDate(doc.Find(`p[align="center"] font[size="-1"]`).First().Text())
+	if err != nil {
+		return nil, err
+	}
+
 	secret := false
 	doc.Find("p").EachWithBreak(func(_ int, s *goquery.Selection) bool {
 		if strings.Contains(s.Text(), "本日のｷｬﾗｸﾀｰ情報は公開されておりません。P") {
@@ -84,12 +95,7 @@ func ParseIndexPage(r io.Reader) (*IndexPage, error) {
 		return true
 	})
 	if secret {
-		return nil, SecretError
-	}
-
-	date, err := parseDate(doc.Find(`p[align="center"] font[size="-1"]`).First().Text())
-	if err != nil {
-		return nil, err
+		return nil, &SecretError{Date: date}
 	}
 
 	form := doc.Find("form").First()
