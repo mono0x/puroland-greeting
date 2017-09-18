@@ -15,7 +15,8 @@ func TestGetSecretIndexPageURL(t *testing.T) {
 	}
 
 	date := time.Date(2016, time.June, 15, 0, 0, 0, 0, loc)
-	assert.Equal(t, "http://www.puroland.co.jp/chara_gre/mobile/?para=20160615", GetSecretIndexPageURL(date))
+	parser := &Parser{}
+	assert.Equal(t, "http://www.puroland.co.jp/chara_gre/mobile/?para=20160615", parser.GetSecretIndexPageURL(date))
 }
 
 func TestParseIndexPage(t *testing.T) {
@@ -30,7 +31,9 @@ func TestParseIndexPage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	page, err := ParseIndexPage(f)
+	parser := &Parser{}
+
+	page, err := parser.ParseIndexPage(f)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -46,7 +49,9 @@ func TestParseMenuPage(t *testing.T) {
 	}
 	defer f.Close()
 
-	page, err := ParseMenuPage(f)
+	parser := &Parser{}
+
+	page, err := parser.ParseMenuPage(f)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -68,7 +73,9 @@ func TestParseCharacterPage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	page, err := ParseCharacterPage(f)
+	parser := &Parser{}
+
+	page, err := parser.ParseCharacterPage(f)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -92,7 +99,9 @@ func TestParseCharacterListPage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	page, err := ParseCharacterListPage(f)
+	parser := &Parser{}
+
+	page, err := parser.ParseCharacterListPage(f)
 	if err != nil {
 		t.Fatal(err)
 	}

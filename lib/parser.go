@@ -26,6 +26,17 @@ var (
 	timeAndPlaceRe = regexp.MustCompile(`\A\s*([０-９]+)：([０-９]+)－([０-９]+)：([０-９]+)(.+)\s*\z`)
 )
 
+type Parser struct {
+	IndexPageURL string
+}
+
+func (p *Parser) indexPageURL() string {
+	if p.IndexPageURL == "" {
+		return IndexPageURL
+	}
+	return p.IndexPageURL
+}
+
 type IndexPage struct {
 	Date        time.Time
 	MenuPageURL string
@@ -70,18 +81,18 @@ type CharacterListPageItem struct {
 	URL  string
 }
 
-func GetSecretIndexPageURL(date time.Time) string {
-	return IndexPageURL + "?para=" + date.Format("20060102")
+func (p *Parser) GetSecretIndexPageURL(date time.Time) string {
+	return p.indexPageURL() + "?para=" + date.Format("20060102")
 }
 
-func ParseIndexPage(r io.Reader) (*IndexPage, error) {
+func (p *Parser) ParseIndexPage(r io.Reader) (*IndexPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
 		return nil, err
 	}
 
-	date, err := parseDate(doc.Find(`p[align="center"] font[size="-1"]`).First().Text())
+	date, err := p.parseDate(doc.Find(`p[align="center"] font[size="-1"]`).First().Text())
 	if err != nil {
 		return nil, err
 	}
@@ -113,12 +124,12 @@ func ParseIndexPage(r io.Reader) (*IndexPage, error) {
 	})
 
 	return &IndexPage{
-		MenuPageURL: IndexPageURL + form.AttrOr("action", "") + "?" + values.Encode(),
+		MenuPageURL: p.indexPageURL() + form.AttrOr("action", "") + "?" + values.Encode(),
 		Date:        date,
 	}, nil
 }
 
-func ParseMenuPage(r io.Reader) (*MenuPage, error) {
+func (p *Parser) ParseMenuPage(r io.Reader) (*MenuPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
@@ -131,7 +142,7 @@ func ParseMenuPage(r io.Reader) (*MenuPage, error) {
 	links.Each(func(_ int, s *goquery.Selection) {
 		items = append(items, MenuPageItem{
 			CharacterName:    s.Text(),
-			CharacterPageURL: IndexPageURL + s.AttrOr("href", ""),
+			CharacterPageURL: p.indexPageURL() + s.AttrOr("href", ""),
 		})
 	})
 
@@ -140,7 +151,7 @@ func ParseMenuPage(r io.Reader) (*MenuPage, error) {
 	}, nil
 }
 
-func parseDate(s string) (time.Time, error) {
+func (p *Parser) parseDate(s string) (time.Time, error) {
 	submatches := dateRe.FindStringSubmatch(s)
 	if len(submatches) == 0 {
 		return time.Time{}, errors.New("date not found")
@@ -167,14 +178,14 @@ func parseDate(s string) (time.Time, error) {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc), nil
 }
 
-func ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
+func (p *Parser) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
 		return nil, err
 	}
 
-	date, err := parseDate(doc.Find(`p[align="center"] font[size="-1"]`).First().Text())
+	date, err := p.parseDate(doc.Find(`p[align="center"] font[size="-1"]`).First().Text())
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +237,7 @@ func ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
 	}, nil
 }
 
-func ParseCharacterListPage(r io.Reader) (*CharacterListPage, error) {
+func (p *Parser) ParseCharacterListPage(r io.Reader) (*CharacterListPage, error) {
 	doc, err := goquery.NewDocumentFromReader(r)
 	if err != nil {
 		return nil, err
