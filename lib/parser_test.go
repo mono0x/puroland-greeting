@@ -20,7 +20,7 @@ func TestGetSecretIndexPageURL(t *testing.T) {
 }
 
 func TestParseIndexPage(t *testing.T) {
-	f, err := os.Open("data/index.asp")
+	f, err := os.Open("data/www.puroland.co.jp/chara_gre/mobile/index.asp")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -43,7 +43,7 @@ func TestParseIndexPage(t *testing.T) {
 }
 
 func TestParseMenuPage(t *testing.T) {
-	f, err := os.Open("data/chara_sentaku.asp")
+	f, err := os.Open("data/www.puroland.co.jp/chara_gre/mobile/chara_sentaku.asp")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -62,7 +62,7 @@ func TestParseMenuPage(t *testing.T) {
 }
 
 func TestParseCharacterPage(t *testing.T) {
-	f, err := os.Open("data/chara_sche.asp")
+	f, err := os.Open("data/www.puroland.co.jp/chara_gre/mobile/chara_sche.asp")
 	if err != nil {
 		t.Fatal(err)
 	}
