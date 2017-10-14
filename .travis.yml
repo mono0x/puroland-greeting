@@ -5,14 +5,20 @@ go:
 before_install:
 - go get github.com/golang/dep/cmd/dep
 - go get honnef.co/go/tools/cmd/megacheck
+- go get golang.org/x/tools/cmd/cover
+- go get github.com/mattn/goveralls
 install:
 - dep ensure
 script:
 - go vet ./...
 - megacheck ./...
 - go test -v -race ./...
+- goveralls -service=travis-ci
 notifications:
   slack:
     secure: kQeFL4M5bfLcj/QQA1fTqXDDSKM3xZ3rSrw15tgXNE0tTf6O9kZyfbMQSBnpEKoo0B9HRH3NEaOaQgR8Tinymo4DrvCKRYZE1OA4qLg06saPixVELQWQvFu+mQhUFnc2PQbApsz/yPuw4P511uo+SXEjSfVxMOU5he4vd0npcEHJSF7zSo+3YxfQQ4cPU9KLjWk9xA5N+W91VX4+bSEBRFZAzrr9Sp4JqmuEyJOF6yuHvtE0z0BgQFl0URbLpgxDQPGGHL3h/uS2uw2WJ/QlvKJrCw0bBD8Bo6nfx0siLjLfI9hFm2qViXHUJw12FxS/OHTHcVisAgCviXuIj+3j2ThCDpSsCKFuvXrh7ZvqLDitw6acwWV8YLTvV4Rm/yTzPzxHNgqMW+f59FEEFcqJpgv9kTUSiIrB+WOz7HH1sHSvbIJ+9CmqJjOZxTpfKzugphn0YsBrtbGHkRJnWnBukvDb47sCaXCiTnnRLjJTcdXTMsWMo/G+GNrPJUg/Ld7TYyIVW1iuZZFeKprhF7dgeDvCN7yMHyjfvHWINQR66JGQ2l1xPtwmCWWXl2+4VpRnqKxpGbv7kzBTOjWvRCTaHK5SKMBWKB8BtLOKIA0GSyDAbH7BbNm4MdRvj+DDQrAf9M1lNacO814HLdzriuXSzQ9c8ZSgB4TFLxrkDbnmFqA=
   on_success: change
   on_failure: always
+env:
+  global:
+    secure: IdtfzIXMu8jt+hCauL4kusndLpLxp3BX/0Hcfi2oqRxA0shRsZJNEgRv4c+3a/YpNeWBou4Y3tIi95rovF4pA/DjWXy1dTfd6qZKi8aLbUbYvQ0zmB6eKGCaO1r/cl933cmsMscpAyUJP25j2dvxExDgv26t+OPctZnGk0nxz/jrfaexhIQWQXbLMFwRYE8c4dlTS0rkVokFAj3QF3d8nOZZyKZ/9rVFYMRjzrG2TE1253kfpaQK16xG3nVPN6EMsTrNDZlIw6qZt9dc2Lmgshc9qqI8rBhby54IFJRnC4vJxiq/40OdDd0NPTWSM/U+inb8VJXcnNWXMx3QX69L36aNIqVDxEMHKHNDljNCs3K6+fA04dof64wsvRCvKmOAyPoawppNGRENsScNbeLGNVcobXUMwHaAE5K0e5iHkpzBUzQxHcwccusUSzZhR9k3VZX2g8t5FxwV1skTQ4FXovq8SgapM5pRxazsSMzNZ5S9dUR0vKbF9wfMWPX8f4yOTwRT1XvlkKFkjnNb+ckCTZQuSwysGNG4Y9OkeB90CUZvio9Jn3LTYnoSSEfHbpSC4r8F8zfPfLrJm54Cw73gpVvUZ25OP5v8erWcJrG28NQ0IkSVe8XMjDAkJTkjlsO4qWCAr2R/Laba6k0msCwcNGIY9fIqA1ZjmtlHnnVe60I=
