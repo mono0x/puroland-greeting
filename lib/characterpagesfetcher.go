@@ -1,7 +1,6 @@
 package greeting
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 )
@@ -40,7 +39,6 @@ func (f *CharacterPagesFetcher) Fetch() ([]*CharacterPage, error) {
 
 	f.sleep()
 
-	fmt.Println(indexPage.MenuPageURL)
 	menuPage, err := f.fetchMenuPage(indexPage.MenuPageURL)
 	if err != nil {
 		return nil, err
