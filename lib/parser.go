@@ -16,76 +16,26 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-const (
-	IndexPageURL         = "http://www.puroland.co.jp/chara_gre/mobile/"
-	CharacterListPageURL = "https://www.puroland.jp/schedule/greeting/"
-)
-
 var (
 	dateRe         = regexp.MustCompile(`(\d+)年(\d+)月(\d+)日(?:\([日月火水木金土]\))?`)
 	timeAndPlaceRe = regexp.MustCompile(`\A\s*([０-９]+)：([０-９]+)－([０-９]+)：([０-９]+)(.+)\s*\z`)
 )
 
-type Parser struct {
-	IndexPageURL string
+type Parser interface {
+	ParseIndexPage(r io.Reader) (*IndexPage, error)
+	ParseMenuPage(r io.Reader) (*MenuPage, error)
+	ParseCharacterPage(r io.Reader) (*CharacterPage, error)
+	ParseCharacterListPage(r io.Reader) (*CharacterListPage, error)
 }
 
-func (p *Parser) indexPageURL() string {
-	if p.IndexPageURL == "" {
-		return IndexPageURL
-	}
-	return p.IndexPageURL
+type parserImpl struct {
 }
 
-type IndexPage struct {
-	Date        time.Time
-	MenuPageURL string
+func NewParser() Parser {
+	return &parserImpl{}
 }
 
-type SecretError struct {
-	Date time.Time
-}
-
-func (err *SecretError) Error() string {
-	return "" // unused
-}
-
-type MenuPage struct {
-	Items []MenuPageItem
-}
-
-type MenuPageItem struct {
-	CharacterName    string
-	CharacterPageURL string
-}
-
-type CharacterPage struct {
-	Name  string
-	Date  time.Time
-	Items []CharacterPageItem
-}
-
-type CharacterPageItem struct {
-	StartAt time.Time
-	EndAt   time.Time
-	Place   string
-}
-
-type CharacterListPage struct {
-	Date  time.Time
-	Items []CharacterListPageItem
-}
-
-type CharacterListPageItem struct {
-	Name string
-	URL  string
-}
-
-func (p *Parser) GetSecretIndexPageURL(date time.Time) string {
-	return p.indexPageURL() + "?para=" + date.Format("20060102")
-}
-
-func (p *Parser) ParseIndexPage(r io.Reader) (*IndexPage, error) {
+func (p *parserImpl) ParseIndexPage(r io.Reader) (*IndexPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
@@ -124,12 +74,12 @@ func (p *Parser) ParseIndexPage(r io.Reader) (*IndexPage, error) {
 	})
 
 	return &IndexPage{
-		MenuPageURL: p.indexPageURL() + form.AttrOr("action", "") + "?" + values.Encode(),
-		Date:        date,
+		MenuPagePath: form.AttrOr("action", "") + "?" + values.Encode(),
+		Date:         date,
 	}, nil
 }
 
-func (p *Parser) ParseMenuPage(r io.Reader) (*MenuPage, error) {
+func (p *parserImpl) ParseMenuPage(r io.Reader) (*MenuPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
@@ -138,11 +88,11 @@ func (p *Parser) ParseMenuPage(r io.Reader) (*MenuPage, error) {
 
 	links := doc.Find(`a[href^="chara_sche.asp?"]`)
 
-	items := make([]MenuPageItem, 0, links.Size())
+	items := make([]*MenuPageItem, 0, links.Size())
 	links.Each(func(_ int, s *goquery.Selection) {
-		items = append(items, MenuPageItem{
-			CharacterName:    s.Text(),
-			CharacterPageURL: p.indexPageURL() + s.AttrOr("href", ""),
+		items = append(items, &MenuPageItem{
+			CharacterName:     s.Text(),
+			CharacterPagePath: s.AttrOr("href", ""),
 		})
 	})
 
@@ -151,7 +101,7 @@ func (p *Parser) ParseMenuPage(r io.Reader) (*MenuPage, error) {
 	}, nil
 }
 
-func (p *Parser) parseDate(s string) (time.Time, error) {
+func (p *parserImpl) parseDate(s string) (time.Time, error) {
 	submatches := dateRe.FindStringSubmatch(s)
 	if len(submatches) == 0 {
 		return time.Time{}, errors.New("date not found")
@@ -178,7 +128,7 @@ func (p *Parser) parseDate(s string) (time.Time, error) {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc), nil
 }
 
-func (p *Parser) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
+func (p *parserImpl) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
@@ -194,7 +144,7 @@ func (p *Parser) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
 
 	fonts := doc.Find(`p[align="left"] font[size="-1"]`)
 
-	items := make([]CharacterPageItem, 0, fonts.Size())
+	items := make([]*CharacterPageItem, 0, fonts.Size())
 	fonts.Each(func(_ int, s *goquery.Selection) {
 		submatches := timeAndPlaceRe.FindStringSubmatch(s.Text())
 		if len(submatches) != 6 {
@@ -223,7 +173,7 @@ func (p *Parser) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
 
 		place := submatches[5]
 
-		items = append(items, CharacterPageItem{
+		items = append(items, &CharacterPageItem{
 			Place:   place,
 			StartAt: startAt,
 			EndAt:   endAt,
@@ -237,7 +187,7 @@ func (p *Parser) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
 	}, nil
 }
 
-func (p *Parser) ParseCharacterListPage(r io.Reader) (*CharacterListPage, error) {
+func (p *parserImpl) ParseCharacterListPage(r io.Reader) (*CharacterListPage, error) {
 	doc, err := goquery.NewDocumentFromReader(r)
 	if err != nil {
 		return nil, err
@@ -266,9 +216,9 @@ func (p *Parser) ParseCharacterListPage(r io.Reader) (*CharacterListPage, error)
 	date := yesterday.AddDate(0, 0, 1)
 
 	charaNames := doc.Find("p.charaName")
-	items := make([]CharacterListPageItem, 0, charaNames.Size())
+	items := make([]*CharacterListPageItem, 0, charaNames.Size())
 	charaNames.Each(func(_ int, s *goquery.Selection) {
-		items = append(items, CharacterListPageItem{
+		items = append(items, &CharacterListPageItem{
 			Name: s.Text(),
 		})
 	})
