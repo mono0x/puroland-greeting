@@ -1,4 +1,4 @@
-package greeting
+package scraping
 
 import (
 	"os"
@@ -9,7 +9,7 @@ import (
 )
 
 func TestParseIndexPage(t *testing.T) {
-	f, err := os.Open("data/www.puroland.co.jp/chara_gre/mobile/index.asp")
+	f, err := os.Open("testdata/www.puroland.co.jp/chara_gre/mobile/index.asp")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func TestParseIndexPage(t *testing.T) {
 }
 
 func TestParseMenuPage(t *testing.T) {
-	f, err := os.Open("data/www.puroland.co.jp/chara_gre/mobile/chara_sentaku.asp")
+	f, err := os.Open("testdata/www.puroland.co.jp/chara_gre/mobile/chara_sentaku.asp")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -51,7 +51,7 @@ func TestParseMenuPage(t *testing.T) {
 }
 
 func TestParseCharacterPage(t *testing.T) {
-	f, err := os.Open("data/www.puroland.co.jp/chara_gre/mobile/chara_sche.asp")
+	f, err := os.Open("testdata/www.puroland.co.jp/chara_gre/mobile/chara_sche.asp")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -77,7 +77,7 @@ func TestParseCharacterPage(t *testing.T) {
 }
 
 func TestParseCharacterListPage(t *testing.T) {
-	f, err := os.Open("data/www.puroland.jp/greeting/schedule/index.html")
+	f, err := os.Open("testdata/www.puroland.jp/greeting/schedule/index.html")
 	if err != nil {
 		t.Fatal(err)
 	}

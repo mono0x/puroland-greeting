@@ -1,4 +1,4 @@
-package greeting
+package scraping
 
 import (
 	"errors"
@@ -14,6 +14,7 @@ import (
 	"golang.org/x/text/unicode/norm"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/mono0x/puroland-greeting/model"
 )
 
 var (
@@ -22,10 +23,18 @@ var (
 )
 
 type Parser interface {
-	ParseIndexPage(r io.Reader) (*IndexPage, error)
-	ParseMenuPage(r io.Reader) (*MenuPage, error)
-	ParseCharacterPage(r io.Reader) (*CharacterPage, error)
-	ParseCharacterListPage(r io.Reader) (*CharacterListPage, error)
+	ParseIndexPage(r io.Reader) (*model.IndexPage, error)
+	ParseMenuPage(r io.Reader) (*model.MenuPage, error)
+	ParseCharacterPage(r io.Reader) (*model.CharacterPage, error)
+	ParseCharacterListPage(r io.Reader) (*model.CharacterListPage, error)
+}
+
+type SecretError struct {
+	Date time.Time
+}
+
+func (err *SecretError) Error() string {
+	return "" // unused
 }
 
 type parserImpl struct {
@@ -35,7 +44,7 @@ func NewParser() Parser {
 	return &parserImpl{}
 }
 
-func (p *parserImpl) ParseIndexPage(r io.Reader) (*IndexPage, error) {
+func (p *parserImpl) ParseIndexPage(r io.Reader) (*model.IndexPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
@@ -73,13 +82,13 @@ func (p *parserImpl) ParseIndexPage(r io.Reader) (*IndexPage, error) {
 		values.Add(name, value)
 	})
 
-	return &IndexPage{
+	return &model.IndexPage{
 		MenuPagePath: form.AttrOr("action", "") + "?" + values.Encode(),
 		Date:         date,
 	}, nil
 }
 
-func (p *parserImpl) ParseMenuPage(r io.Reader) (*MenuPage, error) {
+func (p *parserImpl) ParseMenuPage(r io.Reader) (*model.MenuPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
@@ -88,15 +97,15 @@ func (p *parserImpl) ParseMenuPage(r io.Reader) (*MenuPage, error) {
 
 	links := doc.Find(`a[href^="chara_sche.asp?"]`)
 
-	items := make([]*MenuPageItem, 0, links.Size())
+	items := make([]*model.MenuPageItem, 0, links.Size())
 	links.Each(func(_ int, s *goquery.Selection) {
-		items = append(items, &MenuPageItem{
+		items = append(items, &model.MenuPageItem{
 			CharacterName:     s.Text(),
 			CharacterPagePath: s.AttrOr("href", ""),
 		})
 	})
 
-	return &MenuPage{
+	return &model.MenuPage{
 		Items: items,
 	}, nil
 }
@@ -128,7 +137,7 @@ func (p *parserImpl) parseDate(s string) (time.Time, error) {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc), nil
 }
 
-func (p *parserImpl) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
+func (p *parserImpl) ParseCharacterPage(r io.Reader) (*model.CharacterPage, error) {
 	decodedReader := transform.NewReader(r, japanese.ShiftJIS.NewDecoder())
 	doc, err := goquery.NewDocumentFromReader(decodedReader)
 	if err != nil {
@@ -144,7 +153,7 @@ func (p *parserImpl) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
 
 	fonts := doc.Find(`p[align="left"] font[size="-1"]`)
 
-	items := make([]*CharacterPageItem, 0, fonts.Size())
+	items := make([]*model.CharacterPageItem, 0, fonts.Size())
 	fonts.Each(func(_ int, s *goquery.Selection) {
 		submatches := timeAndPlaceRe.FindStringSubmatch(s.Text())
 		if len(submatches) != 6 {
@@ -173,21 +182,21 @@ func (p *parserImpl) ParseCharacterPage(r io.Reader) (*CharacterPage, error) {
 
 		place := submatches[5]
 
-		items = append(items, &CharacterPageItem{
+		items = append(items, &model.CharacterPageItem{
 			Place:   place,
 			StartAt: startAt,
 			EndAt:   endAt,
 		})
 	})
 
-	return &CharacterPage{
+	return &model.CharacterPage{
 		Date:  date,
 		Name:  name,
 		Items: items,
 	}, nil
 }
 
-func (p *parserImpl) ParseCharacterListPage(r io.Reader) (*CharacterListPage, error) {
+func (p *parserImpl) ParseCharacterListPage(r io.Reader) (*model.CharacterListPage, error) {
 	doc, err := goquery.NewDocumentFromReader(r)
 	if err != nil {
 		return nil, err
@@ -216,14 +225,14 @@ func (p *parserImpl) ParseCharacterListPage(r io.Reader) (*CharacterListPage, er
 	date := yesterday.AddDate(0, 0, 1)
 
 	charaNames := doc.Find("p.charaName")
-	items := make([]*CharacterListPageItem, 0, charaNames.Size())
+	items := make([]*model.CharacterListPageItem, 0, charaNames.Size())
 	charaNames.Each(func(_ int, s *goquery.Selection) {
-		items = append(items, &CharacterListPageItem{
+		items = append(items, &model.CharacterListPageItem{
 			Name: s.Text(),
 		})
 	})
 
-	return &CharacterListPage{
+	return &model.CharacterListPage{
 		Date:  date,
 		Items: items,
 	}, nil

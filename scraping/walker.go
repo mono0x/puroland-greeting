@@ -1,11 +1,13 @@
-package greeting
+package scraping
 
 import (
 	"time"
+
+	"github.com/mono0x/puroland-greeting/model"
 )
 
 type Walker interface {
-	Walk() ([]*CharacterPage, error)
+	Walk() ([]*model.CharacterPage, error)
 }
 
 type walkerImpl struct {
@@ -26,7 +28,7 @@ func (w *walkerImpl) sleep() {
 	}
 }
 
-func (w *walkerImpl) Walk() ([]*CharacterPage, error) {
+func (w *walkerImpl) Walk() ([]*model.CharacterPage, error) {
 	indexPage, err := w.fetcher.FetchIndexPage()
 	if err != nil {
 		secretErr, ok := err.(*SecretError)
@@ -49,7 +51,7 @@ func (w *walkerImpl) Walk() ([]*CharacterPage, error) {
 		return nil, err
 	}
 
-	characterPages := make([]*CharacterPage, 0, len(menuPage.Items))
+	characterPages := make([]*model.CharacterPage, 0, len(menuPage.Items))
 	for _, item := range menuPage.Items {
 		w.sleep()
 

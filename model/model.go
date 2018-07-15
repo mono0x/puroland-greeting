@@ -1,18 +1,10 @@
-package greeting
+package model
 
 import "time"
 
 type IndexPage struct {
 	Date         time.Time
 	MenuPagePath string
-}
-
-type SecretError struct {
-	Date time.Time
-}
-
-func (err *SecretError) Error() string {
-	return "" // unused
 }
 
 type MenuPage struct {
