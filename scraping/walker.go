@@ -7,7 +7,7 @@ import (
 )
 
 type Walker interface {
-	Walk() ([]*model.CharacterPage, error)
+	Walk() (*model.RawData, error)
 }
 
 type walkerImpl struct {
@@ -28,7 +28,7 @@ func (w *walkerImpl) sleep() {
 	}
 }
 
-func (w *walkerImpl) Walk() ([]*model.CharacterPage, error) {
+func (w *walkerImpl) Walk() (*model.RawData, error) {
 	indexPage, err := w.fetcher.FetchIndexPage()
 	if err != nil {
 		secretErr, ok := err.(*SecretError)
@@ -61,5 +61,9 @@ func (w *walkerImpl) Walk() ([]*model.CharacterPage, error) {
 		}
 		characterPages = append(characterPages, characterPage)
 	}
-	return characterPages, nil
+	return &model.RawData{
+		IndexPage:      indexPage,
+		MenuPage:       menuPage,
+		CharacterPages: characterPages,
+	}, nil
 }

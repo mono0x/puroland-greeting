@@ -36,3 +36,9 @@ type CharacterListPage struct {
 type CharacterListPageItem struct {
 	Name string
 }
+
+type RawData struct {
+	IndexPage      *IndexPage
+	MenuPage       *MenuPage
+	CharacterPages []*CharacterPage
+}
