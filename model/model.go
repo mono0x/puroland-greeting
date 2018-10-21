@@ -44,23 +44,20 @@ type RawData struct {
 }
 
 type Greeting struct {
-	Id               int64
-	Date             time.Time
-	StartAt          time.Time
-	FinishAt         time.Time
-	PlaceId          int64
-	CharacterId      int64
-	CostumeId        *int64
-	RawPlaceName     string
-	RawCharacterName string
+	Id          int64
+	Date        time.Time
+	StartAt     time.Time
+	FinishAt    time.Time
+	PlaceId     int64
+	CharacterId int64
+	CostumeId   *int64
 }
 
 type PreNotice struct {
-	Id               int64
-	Date             time.Time
-	CharacterId      int64
-	CostumeId        *int64
-	RawCharacterName string
+	Id          int64
+	Date        time.Time
+	CharacterId int64
+	CostumeId   *int64
 }
 
 type Place struct {
