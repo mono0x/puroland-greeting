@@ -160,21 +160,21 @@ func (p *parserImpl) ParseCharacterPage(r io.Reader) (*model.CharacterPage, erro
 			return
 		}
 
-		startHour, err := strconv.Atoi(string(norm.NFKC.Bytes([]byte(submatches[1]))))
+		startHour, err := strconv.Atoi(norm.NFKC.String(submatches[1]))
 		if err != nil {
 			return
 		}
-		startMinute, err := strconv.Atoi(string(norm.NFKC.Bytes([]byte(submatches[2]))))
+		startMinute, err := strconv.Atoi(norm.NFKC.String(submatches[2]))
 		if err != nil {
 			return
 		}
 		startAt := time.Date(date.Year(), date.Month(), date.Day(), startHour, startMinute, 0, 0, date.Location())
 
-		endHour, err := strconv.Atoi(string(norm.NFKC.Bytes([]byte(submatches[3]))))
+		endHour, err := strconv.Atoi(norm.NFKC.String(submatches[3]))
 		if err != nil {
 			return
 		}
-		endMinute, err := strconv.Atoi(string(norm.NFKC.Bytes([]byte(submatches[4]))))
+		endMinute, err := strconv.Atoi(norm.NFKC.String(submatches[4]))
 		if err != nil {
 			return
 		}
