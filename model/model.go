@@ -42,3 +42,39 @@ type RawData struct {
 	MenuPage       *MenuPage
 	CharacterPages []*CharacterPage
 }
+
+type Greeting struct {
+	Id               int64
+	Date             time.Time
+	StartAt          time.Time
+	FinishAt         time.Time
+	PlaceId          int64
+	CharacterId      int64
+	CostumeId        *int64
+	RawPlaceName     string
+	RawCharacterName string
+}
+
+type PreNotice struct {
+	Id               int64
+	Date             time.Time
+	CharacterId      int64
+	CostumeId        *int64
+	RawCharacterName string
+}
+
+type Place struct {
+	Id   int64
+	Name string
+}
+
+type Character struct {
+	Id   int64
+	Name string
+}
+
+type Costume struct {
+	Id          int64
+	CharacterId int64
+	Name        string
+}
