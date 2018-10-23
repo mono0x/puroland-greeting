@@ -26,14 +26,6 @@
   version = "v1.1.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:df265b7f54410945dad5cf5979d91461b9fa7ff9b397ab58d2d577002a8a0e24"
-  name = "github.com/google/subcommands"
-  packages = ["."]
-  pruneopts = ""
-  revision = "46f0354f63152e8801bb460d26f5b6c4c878efbb"
-
-[[projects]]
   digest = "1:256484dbbcd271f9ecebc6795b2df8cad4c458dd0f5fd82a8c2fa0c29f233411"
   name = "github.com/pmezard/go-difflib"
   packages = ["difflib"]
@@ -85,7 +77,6 @@
   analyzer-version = 1
   input-imports = [
     "github.com/PuerkitoBio/goquery",
-    "github.com/google/subcommands",
     "github.com/stretchr/testify/assert",
     "golang.org/x/text/encoding/japanese",
     "golang.org/x/text/transform",
