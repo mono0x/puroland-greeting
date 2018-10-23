@@ -34,39 +34,20 @@
   version = "v3.3.3"
 
 [[projects]]
-  digest = "1:286c62eb3b97cbecec9efca9931544873996098f2931339b5fa0691c618c1c67"
-  name = "github.com/labstack/echo"
-  packages = ["."]
+  branch = "master"
+  digest = "1:1e9ca50ef3425afdb2fd2041606e5d5869d8f5d497742b1b63d9553be852478d"
+  name = "github.com/lestrrat/go-server-starter"
+  packages = ["listener"]
   pruneopts = ""
-  revision = "1abaa3049251d17932e4313c2d6165073fd07fd8"
-  version = "v3.3.6"
+  revision = "6ac0b358431b798d3db8933ef547464e4ce74d9d"
 
 [[projects]]
-  digest = "1:f0c583bb1189614701bb928f1a73a7f71a3d31b76f1fbbe6619a83d92cbd2def"
-  name = "github.com/labstack/gommon"
-  packages = [
-    "color",
-    "log",
-  ]
-  pruneopts = ""
-  revision = "2a618302b929cc20862dda3aa6f02f64dbe740dd"
-  version = "v0.2.7"
-
-[[projects]]
-  digest = "1:9ea83adf8e96d6304f394d40436f2eb44c1dc3250d223b74088cc253a6cd0a1c"
-  name = "github.com/mattn/go-colorable"
+  digest = "1:7365acd48986e205ccb8652cc746f09c8b7876030d53710ea6ef7d0bd0dcd7ca"
+  name = "github.com/pkg/errors"
   packages = ["."]
   pruneopts = ""
-  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
-  version = "v0.0.9"
-
-[[projects]]
-  digest = "1:3140e04675a6a91d2a20ea9d10bdadf6072085502e6def6768361260aee4b967"
-  name = "github.com/mattn/go-isatty"
-  packages = ["."]
-  pruneopts = ""
-  revision = "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
-  version = "v0.0.4"
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
 
 [[projects]]
   digest = "1:256484dbbcd271f9ecebc6795b2df8cad4c458dd0f5fd82a8c2fa0c29f233411"
@@ -93,33 +74,6 @@
   version = "v1.20.0"
 
 [[projects]]
-  digest = "1:857a9ecd5cb13379ecc8f798f6e6b6b574c98b9355657d91e068275f1120aaf7"
-  name = "github.com/valyala/bytebufferpool"
-  packages = ["."]
-  pruneopts = ""
-  revision = "e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7"
-  version = "v1.0.0"
-
-[[projects]]
-  branch = "master"
-  digest = "1:bf6f8915c0338e875383cb7fdebd58a4d360a232f461d9a029d7ccb12f90c5d7"
-  name = "github.com/valyala/fasttemplate"
-  packages = ["."]
-  pruneopts = ""
-  revision = "dcecefd839c4193db0d35b88ec65b4c12d360ab0"
-
-[[projects]]
-  branch = "master"
-  digest = "1:78f41d38365ccef743e54ed854a2faf73313ba0750c621116a8eeb0395590bd0"
-  name = "golang.org/x/crypto"
-  packages = [
-    "acme",
-    "acme/autocert",
-  ]
-  pruneopts = ""
-  revision = "0c41d7ab0a0ee717d4590a44bcb987dfd9e183eb"
-
-[[projects]]
   branch = "master"
   digest = "1:6543c75ddc1efc0041202dd49378ee2e5711b7cc82c2845c0437eef6276cc984"
   name = "golang.org/x/net"
@@ -129,14 +83,6 @@
   ]
   pruneopts = ""
   revision = "04a2e542c03f1d053ab3e4d6e5abcd4b66e2be8e"
-
-[[projects]]
-  branch = "master"
-  digest = "1:03a1b1f2bfb0a6b2291c4161032429b1e8a1f23cc68530ad64358f8b493ead5f"
-  name = "golang.org/x/sys"
-  packages = ["unix"]
-  pruneopts = ""
-  revision = "8a28ead16f52c8aaeffbf79239b251dfdf6c4f96"
 
 [[projects]]
   digest = "1:5acd3512b047305d49e8763eef7ba423901e85d5dd2fd1e71778a0ea8de10bd4"
@@ -164,7 +110,8 @@
   input-imports = [
     "github.com/PuerkitoBio/goquery",
     "github.com/go-chi/chi",
-    "github.com/labstack/echo",
+    "github.com/lestrrat/go-server-starter/listener",
+    "github.com/pkg/errors",
     "github.com/stretchr/testify/assert",
     "github.com/urfave/cli",
     "golang.org/x/text/encoding/japanese",

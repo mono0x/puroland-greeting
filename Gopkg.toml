@@ -38,9 +38,5 @@
   version = "1.20.0"
 
 [[constraint]]
-  name = "github.com/labstack/echo"
-  version = "3.3.6"
-
-[[constraint]]
   name = "github.com/go-chi/chi"
   version = "3.3.3"
