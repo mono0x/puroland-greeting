@@ -1,14 +1,21 @@
 package command
 
 import (
+	"context"
+	"log"
 	"net"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"github.com/mono0x/puroland-greeting/server"
 
 	"github.com/pkg/errors"
 
 	"github.com/lestrrat/go-server-starter/listener"
 
-	"github.com/mono0x/puroland-greeting/server"
 	"github.com/urfave/cli"
 )
 
@@ -43,8 +50,17 @@ func onServerCommand(c *cli.Context) error {
 
 	s := http.Server{Handler: server.New()}
 
-	if err := s.Serve(l); err != nil {
-		return err
-	}
-	return nil
+	go func() {
+		if err := s.Serve(l); err != nil && err != http.ErrServerClosed {
+			log.Fatal(err)
+		}
+	}()
+
+	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan, syscall.SIGTERM, os.Interrupt)
+	<-signalChan
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	return s.Shutdown(ctx)
 }
