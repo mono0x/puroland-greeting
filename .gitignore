@@ -1,2 +1,3 @@
 /vendor/
 /puroland-greeting
+/command/wire_gen.go

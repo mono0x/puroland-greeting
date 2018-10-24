@@ -5,9 +5,11 @@ go:
 before_install:
 - go get github.com/golang/dep/cmd/dep
 - go get honnef.co/go/tools/cmd/megacheck
+- go get github.com/google/go-cloud/wire/cmd/wire
 - go get github.com/mattn/goveralls
 install:
 - dep ensure
+- wire ./command
 script:
 - go vet ./...
 - megacheck ./...

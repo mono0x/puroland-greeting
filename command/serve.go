@@ -10,8 +10,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/mono0x/puroland-greeting/server"
-
 	"github.com/pkg/errors"
 
 	"github.com/lestrrat/go-server-starter/listener"
@@ -48,7 +46,12 @@ func onServeCommand(c *cli.Context) error {
 		l = listeners[0]
 	}
 
-	s := http.Server{Handler: server.New()}
+	handler, err := injectHandler()
+	if err != nil {
+		return err
+	}
+
+	s := http.Server{Handler: handler}
 
 	go func() {
 		if err := s.Serve(l); err != nil && err != http.ErrServerClosed {

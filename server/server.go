@@ -6,7 +6,7 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func New() http.Handler {
+func NewHandler() http.Handler {
 	r := chi.NewRouter()
 	r.Get("/", onIndex)
 
