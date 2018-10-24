@@ -14,6 +14,7 @@ func main() {
 	app.Name = "puroland-greeting"
 	app.Commands = []cli.Command{
 		command.NewServeCommand(),
+		command.NewUpdateCommand(),
 	}
 
 	if err := app.Run(os.Args); err != nil {
