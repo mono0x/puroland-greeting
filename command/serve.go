@@ -19,17 +19,17 @@ import (
 	"github.com/urfave/cli"
 )
 
-func NewServerCommand() cli.Command {
+func NewServeCommand() cli.Command {
 	return cli.Command{
-		Name: "server",
+		Name: "serve",
 		Flags: []cli.Flag{
 			cli.StringFlag{Name: "addr"},
 		},
-		Action: onServerCommand,
+		Action: onServeCommand,
 	}
 }
 
-func onServerCommand(c *cli.Context) error {
+func onServeCommand(c *cli.Context) error {
 	var l net.Listener
 	if addr := c.String("addr"); addr != "" {
 		var err error

@@ -13,7 +13,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "puroland-greeting"
 	app.Commands = []cli.Command{
-		command.NewServerCommand(),
+		command.NewServeCommand(),
 	}
 
 	if err := app.Run(os.Args); err != nil {
