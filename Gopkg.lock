@@ -34,6 +34,14 @@
   version = "v3.3.3"
 
 [[projects]]
+  digest = "1:a0278c8ba54deef02d6f2115703bc2bf87244972f7d17591986b88c3c1813c04"
+  name = "github.com/google/go-cloud"
+  packages = ["wire"]
+  pruneopts = ""
+  revision = "573424055b8e657474e034cdb3a8d5f9210010b7"
+  version = "v0.4.0"
+
+[[projects]]
   branch = "master"
   digest = "1:1e9ca50ef3425afdb2fd2041606e5d5869d8f5d497742b1b63d9553be852478d"
   name = "github.com/lestrrat/go-server-starter"
@@ -75,14 +83,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:6543c75ddc1efc0041202dd49378ee2e5711b7cc82c2845c0437eef6276cc984"
+  digest = "1:b001b57f383ecbebb54c3916ca6b8be129a6486d3dbf2dfc722cbb0a0b2a8679"
   name = "golang.org/x/net"
   packages = [
     "html",
     "html/atom",
   ]
   pruneopts = ""
-  revision = "04a2e542c03f1d053ab3e4d6e5abcd4b66e2be8e"
+  revision = "9b4f9f5ad5197c79fd623a3638e70d8b26cef344"
 
 [[projects]]
   digest = "1:5acd3512b047305d49e8763eef7ba423901e85d5dd2fd1e71778a0ea8de10bd4"
@@ -110,6 +118,7 @@
   input-imports = [
     "github.com/PuerkitoBio/goquery",
     "github.com/go-chi/chi",
+    "github.com/google/go-cloud/wire",
     "github.com/lestrrat/go-server-starter/listener",
     "github.com/pkg/errors",
     "github.com/stretchr/testify/assert",
