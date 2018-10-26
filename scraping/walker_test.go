@@ -50,14 +50,14 @@ func TestWalk(t *testing.T) {
 				Date: time.Date(2018, 10, 20, 0, 0, 0, 0, loc),
 				Items: []*model.CharacterPageItem{
 					{
-						StartAt: time.Date(2018, 10, 20, 10, 20, 0, 0, loc),
-						EndAt:   time.Date(2018, 10, 20, 10, 50, 0, 0, loc),
-						Place:   "ビレッジ(1F)",
+						StartAt:  time.Date(2018, 10, 20, 10, 20, 0, 0, loc),
+						FinishAt: time.Date(2018, 10, 20, 10, 50, 0, 0, loc),
+						Place:    "ビレッジ(1F)",
 					},
 					{
-						StartAt: time.Date(2018, 10, 20, 15, 0, 0, 0, loc),
-						EndAt:   time.Date(2018, 10, 20, 15, 30, 0, 0, loc),
-						Place:   "館外(他)",
+						StartAt:  time.Date(2018, 10, 20, 15, 0, 0, 0, loc),
+						FinishAt: time.Date(2018, 10, 20, 15, 30, 0, 0, loc),
+						Place:    "館外(他)",
 					},
 				},
 			},
@@ -66,14 +66,14 @@ func TestWalk(t *testing.T) {
 				Date: time.Date(2018, 10, 20, 0, 0, 0, 0, loc),
 				Items: []*model.CharacterPageItem{
 					{
-						StartAt: time.Date(2018, 10, 20, 10, 20, 0, 0, loc),
-						EndAt:   time.Date(2018, 10, 20, 10, 50, 0, 0, loc),
-						Place:   "ビレッジ(1F)",
+						StartAt:  time.Date(2018, 10, 20, 10, 20, 0, 0, loc),
+						FinishAt: time.Date(2018, 10, 20, 10, 50, 0, 0, loc),
+						Place:    "ビレッジ(1F)",
 					},
 					{
-						StartAt: time.Date(2018, 10, 20, 13, 30, 0, 0, loc),
-						EndAt:   time.Date(2018, 10, 20, 14, 0, 0, 0, loc),
-						Place:   "4Fふわもこタウンシナモロールわごん付近(4F)",
+						StartAt:  time.Date(2018, 10, 20, 13, 30, 0, 0, loc),
+						FinishAt: time.Date(2018, 10, 20, 14, 0, 0, 0, loc),
+						Place:    "4Fふわもこタウンシナモロールわごん付近(4F)",
 					},
 				},
 			},
@@ -98,7 +98,7 @@ func TestWalk(t *testing.T) {
 	assert.Equal(t, time.Date(2018, 10, 20, 0, 0, 0, 0, loc), rawData.CharacterPages[0].Date)
 	assert.Equal(t, 2, len(rawData.CharacterPages[0].Items))
 	assert.Equal(t, time.Date(2018, 10, 20, 10, 20, 0, 0, loc), rawData.CharacterPages[0].Items[0].StartAt)
-	assert.Equal(t, time.Date(2018, 10, 20, 10, 50, 0, 0, loc), rawData.CharacterPages[0].Items[0].EndAt)
+	assert.Equal(t, time.Date(2018, 10, 20, 10, 50, 0, 0, loc), rawData.CharacterPages[0].Items[0].FinishAt)
 	assert.Equal(t, "ビレッジ(1F)", rawData.CharacterPages[0].Items[0].Place)
 }
 
@@ -150,9 +150,9 @@ func TestWalk_secret(t *testing.T) {
 				Date: time.Date(2018, 6, 28, 0, 0, 0, 0, loc),
 				Items: []*model.CharacterPageItem{
 					{
-						StartAt: time.Date(2018, 6, 28, 10, 20, 0, 0, loc),
-						EndAt:   time.Date(2018, 6, 28, 10, 50, 0, 0, loc),
-						Place:   "ビレッジ(1F)",
+						StartAt:  time.Date(2018, 6, 28, 10, 20, 0, 0, loc),
+						FinishAt: time.Date(2018, 6, 28, 10, 50, 0, 0, loc),
+						Place:    "ビレッジ(1F)",
 					},
 				},
 			},
@@ -177,6 +177,6 @@ func TestWalk_secret(t *testing.T) {
 	assert.Equal(t, time.Date(2018, 6, 28, 0, 0, 0, 0, loc), rawData.CharacterPages[0].Date)
 	assert.Equal(t, 1, len(rawData.CharacterPages[0].Items))
 	assert.Equal(t, time.Date(2018, 6, 28, 10, 20, 0, 0, loc), rawData.CharacterPages[0].Items[0].StartAt)
-	assert.Equal(t, time.Date(2018, 6, 28, 10, 50, 0, 0, loc), rawData.CharacterPages[0].Items[0].EndAt)
+	assert.Equal(t, time.Date(2018, 6, 28, 10, 50, 0, 0, loc), rawData.CharacterPages[0].Items[0].FinishAt)
 	assert.Equal(t, "ビレッジ(1F)", rawData.CharacterPages[0].Items[0].Place)
 }

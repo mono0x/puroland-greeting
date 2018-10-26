@@ -1,11 +1,12 @@
 package scraping
 
 import (
-	"testing"
 	"net/http"
-	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
+	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestNewFetcher(t *testing.T) {
@@ -28,7 +29,7 @@ func TestFetchIndexPage(t *testing.T) {
 	client := server.Client()
 
 	parser := NewParser()
-	fetcher := NewFetcher(client, parser, server.URL + "/")
+	fetcher := NewFetcher(client, parser, server.URL+"/")
 
 	page, err := fetcher.FetchIndexPage()
 	if err != nil {
@@ -50,7 +51,7 @@ func TestFetchMenuPage(t *testing.T) {
 	client := server.Client()
 
 	parser := NewParser()
-	fetcher := NewFetcher(client, parser, server.URL + "/")
+	fetcher := NewFetcher(client, parser, server.URL+"/")
 
 	page, err := fetcher.FetchMenuPage("chara_sentaku.asp?TCHK=2016156&lang=")
 	if err != nil {
@@ -79,7 +80,7 @@ func TestFetchCharacterPage(t *testing.T) {
 	client := server.Client()
 
 	parser := NewParser()
-	fetcher := NewFetcher(client, parser, server.URL + "/")
+	fetcher := NewFetcher(client, parser, server.URL+"/")
 
 	page, err := fetcher.FetchCharacterPage("chara_sche.asp?TCHK=2016156&C_KEY=1")
 	if err != nil {
@@ -90,6 +91,5 @@ func TestFetchCharacterPage(t *testing.T) {
 	assert.Equal(t, "キティ・ホワイト", page.Name)
 	assert.Equal(t, 2, len(page.Items))
 	assert.Equal(t, time.Date(2016, time.June, 15, 11, 0, 0, 0, loc), page.Items[0].StartAt)
-	assert.Equal(t, time.Date(2016, time.June, 15, 11, 30, 0, 0, loc), page.Items[0].EndAt)
+	assert.Equal(t, time.Date(2016, time.June, 15, 11, 30, 0, 0, loc), page.Items[0].FinishAt)
 }
-

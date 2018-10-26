@@ -10,6 +10,14 @@
   version = "v1.1.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:d1851a48bd53ae20f39e2270e25fb1a41f46827112db1877c90a4e96e3469261"
+  name = "github.com/Songmu/go-ltsv"
+  packages = ["."]
+  pruneopts = ""
+  revision = "c30af2b7b171f5896188903b69f8afa4ef3e7daa"
+
+[[projects]]
   digest = "1:e3726ad6f38f710e84c8dcd0e830014de6eaeea81f28d91ae898afecc078479a"
   name = "github.com/andybalholm/cascadia"
   packages = ["."]
@@ -117,6 +125,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/PuerkitoBio/goquery",
+    "github.com/Songmu/go-ltsv",
     "github.com/go-chi/chi",
     "github.com/google/go-cloud/wire",
     "github.com/lestrrat/go-server-starter/listener",

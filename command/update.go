@@ -10,5 +10,9 @@ func NewUpdateCommand() cli.Command {
 }
 
 func onUpdateCommand(c *cli.Context) error {
-	return nil
+	updater, err := injectUpdater()
+	if err != nil {
+		return err
+	}
+	return updater.Update()
 }

@@ -178,14 +178,14 @@ func (p *parserImpl) ParseCharacterPage(r io.Reader) (*model.CharacterPage, erro
 		if err != nil {
 			return
 		}
-		endAt := time.Date(date.Year(), date.Month(), date.Day(), endHour, endMinute, 0, 0, date.Location())
+		finishAt := time.Date(date.Year(), date.Month(), date.Day(), endHour, endMinute, 0, 0, date.Location())
 
 		place := submatches[5]
 
 		items = append(items, &model.CharacterPageItem{
-			Place:   place,
-			StartAt: startAt,
-			EndAt:   endAt,
+			Place:    place,
+			StartAt:  startAt,
+			FinishAt: finishAt,
 		})
 	})
 
