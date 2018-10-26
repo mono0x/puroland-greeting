@@ -19,7 +19,7 @@ import (
 
 var (
 	dateRe         = regexp.MustCompile(`(\d+)年(\d+)月(\d+)日(?:\([日月火水木金土]\))?`)
-	timeAndPlaceRe = regexp.MustCompile(`\A\s*([０-９]+)：([０-９]+)－([０-９]+)：([０-９]+)(.+)\s*\z`)
+	timeAndPlaceRe = regexp.MustCompile(`\A\s*([０-９]{1,2})：([０-９]{1,2})－([０-９]{1,2})：([０-９]{1,2})(.+)\s*\z`)
 )
 
 type Parser interface {
