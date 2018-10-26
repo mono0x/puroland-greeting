@@ -129,11 +129,6 @@ func (p *parserImpl) parseDate(s string) (time.Time, error) {
 		return time.Time{}, err
 	}
 
-	loc, err := time.LoadLocation("Asia/Tokyo")
-	if err != nil {
-		return time.Time{}, err
-	}
-
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc), nil
 }
 
@@ -198,11 +193,6 @@ func (p *parserImpl) ParseCharacterPage(r io.Reader) (*model.CharacterPage, erro
 
 func (p *parserImpl) ParseCharacterListPage(r io.Reader) (*model.CharacterListPage, error) {
 	doc, err := goquery.NewDocumentFromReader(r)
-	if err != nil {
-		return nil, err
-	}
-
-	loc, err := time.LoadLocation("Asia/Tokyo")
 	if err != nil {
 		return nil, err
 	}
