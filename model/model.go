@@ -46,14 +46,6 @@ type Greeting struct {
 	FinishAt    time.Time
 	PlaceId     int64
 	CharacterId int64
-	CostumeId   *int64
-}
-
-type PreNotice struct {
-	Id          int64
-	Date        time.Time
-	CharacterId int64
-	CostumeId   *int64
 }
 
 type Place struct {
@@ -66,8 +58,29 @@ type Character struct {
 	Name string
 }
 
-type Costume struct {
-	Id          int64
-	CharacterId int64
-	Name        string
+type CanonicalPlace struct {
+	Id   int64
+	Name string
+}
+
+type CanonicalCharacter struct {
+	Id   int64
+	Name string
+}
+
+type Style struct {
+	Id                   int64
+	CanonicalCharacterId int64
+	Name                 string
+}
+
+type CharacterCanonicalization struct {
+	CharacterId          int64
+	CanonicalCharacterId int64
+	StyleId              *int64
+}
+
+type PlaceCanonicalization struct {
+	PlaceId          int64
+	CanonicalPlaceId int64
 }
