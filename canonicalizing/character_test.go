@@ -1,4 +1,4 @@
-package normalizing
+package canonicalizing
 
 import (
 	"testing"
@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNormalizeCharacter(t *testing.T) {
+func TestCanonicalizeCharacterName(t *testing.T) {
 	testcases := []struct {
 		source            string
 		expectedCharacter string
@@ -19,7 +19,7 @@ func TestNormalizeCharacter(t *testing.T) {
 	}
 
 	for _, testcase := range testcases {
-		actualCharacter, actualCostume := NormalizeCharacter(testcase.source)
+		actualCharacter, actualCostume := CanonicalizeCharacterName(testcase.source)
 		assert.Equal(t, testcase.expectedCharacter, actualCharacter)
 		assert.Equal(t, testcase.expectedCostume, actualCostume)
 	}

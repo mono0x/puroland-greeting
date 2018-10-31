@@ -1,4 +1,4 @@
-package normalizing
+package canonicalizing
 
 import (
 	"regexp"
@@ -28,7 +28,7 @@ var ignoreCostumes = map[string]struct{}{
 
 var characterCostumeRe = regexp.MustCompile(`\A(.+?)\s*(?:\((.+?)\))?\z`)
 
-func NormalizeCharacter(source string) (string, string) {
+func CanonicalizeCharacterName(source string) (string, string) {
 	folded := width.Fold.String(source)
 
 	var character string

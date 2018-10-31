@@ -1,4 +1,4 @@
-package normalizing
+package canonicalizing
 
 import "golang.org/x/text/width"
 
@@ -14,7 +14,7 @@ var placeRules = map[string]string{
 	"縁日会場（きゃらグリ）":              "キャラクター縁日会場(1F)",
 }
 
-func NormalizePlace(source string) string {
+func CanonicalizePlaceName(source string) string {
 	folded := width.Fold.String(source)
 	if replaced, ok := placeRules[folded]; ok {
 		return replaced
