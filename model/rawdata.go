@@ -11,9 +11,9 @@ func (r *RawData) ToRawGreetings() []*RawGreeting {
 	for _, characterPage := range r.CharacterPages {
 		for _, item := range characterPage.Items {
 			rawGreetings = append(rawGreetings, &RawGreeting{
-				StartAt:   (*RawGreetingTime)(&item.StartAt),
-				FinishAt:  (*RawGreetingTime)(&item.FinishAt),
-				Place:     item.Place,
+				StartTime: (*RawGreetingTime)(&item.StartTime),
+				EndTime:   (*RawGreetingTime)(&item.EndTime),
+				Venue:     item.Venue,
 				Character: characterPage.Name,
 			})
 		}

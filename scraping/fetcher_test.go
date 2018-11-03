@@ -90,6 +90,6 @@ func TestFetchCharacterPage(t *testing.T) {
 	assert.Equal(t, time.Date(2016, time.June, 15, 0, 0, 0, 0, loc), page.Date)
 	assert.Equal(t, "キティ・ホワイト", page.Name)
 	assert.Equal(t, 2, len(page.Items))
-	assert.Equal(t, time.Date(2016, time.June, 15, 11, 0, 0, 0, loc), page.Items[0].StartAt)
-	assert.Equal(t, time.Date(2016, time.June, 15, 11, 30, 0, 0, loc), page.Items[0].FinishAt)
+	assert.Equal(t, time.Date(2016, time.June, 15, 11, 0, 0, 0, loc), page.Items[0].StartTime)
+	assert.Equal(t, time.Date(2016, time.June, 15, 11, 30, 0, 0, loc), page.Items[0].EndTime)
 }

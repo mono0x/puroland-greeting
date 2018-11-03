@@ -21,7 +21,7 @@ func (r *RawGreetingTime) UnmarshalText(b []byte) error {
 
 type RawGreeting struct {
 	Character string           `ltsv:"character"`
-	Place     string           `ltsv:"place"`
-	StartAt   *RawGreetingTime `ltsv:"start_at"`
-	FinishAt  *RawGreetingTime `ltsv:"end_at"` // for compatibility
+	Venue     string           `ltsv:"place"` // for compatibility
+	StartTime *RawGreetingTime `ltsv:"start_at"`
+	EndTime   *RawGreetingTime `ltsv:"end_at"` // for compatibility
 }

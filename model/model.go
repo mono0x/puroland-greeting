@@ -25,9 +25,9 @@ type CharacterPage struct {
 }
 
 type CharacterPageItem struct {
-	StartAt  time.Time
-	FinishAt time.Time
-	Place    string
+	StartTime time.Time
+	EndTime   time.Time
+	Venue     string
 }
 
 type CharacterListPage struct {
@@ -42,13 +42,13 @@ type CharacterListPageItem struct {
 type Greeting struct {
 	Id          int64
 	Date        time.Time
-	StartAt     time.Time
-	FinishAt    time.Time
-	PlaceId     int64
+	StartTime   time.Time
+	EndTime     time.Time
+	VenueId     int64
 	CharacterId int64
 }
 
-type Place struct {
+type Venue struct {
 	Id   int64
 	Name string
 }
@@ -58,7 +58,7 @@ type Character struct {
 	Name string
 }
 
-type CanonicalPlace struct {
+type CanonicalVenue struct {
 	Id   int64
 	Name string
 }
@@ -80,7 +80,7 @@ type CharacterCanonicalization struct {
 	StyleId              *int64
 }
 
-type PlaceCanonicalization struct {
-	PlaceId          int64
-	CanonicalPlaceId int64
+type VenueCanonicalization struct {
+	VenueId          int64
+	CanonicalVenueId int64
 }

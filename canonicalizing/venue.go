@@ -2,7 +2,7 @@ package canonicalizing
 
 import "golang.org/x/text/width"
 
-var placeRules = map[string]string{
+var venueRules = map[string]string{
 	"ビレッジ(1F)": "ピューロビレッジ(1F)",
 	"エンターティメントホール入口(1F)":       "エンターテイメントホール入口(1F)",
 	"エンターティメントホール(1F)":         "エンターテイメントホール(1F)",
@@ -14,9 +14,9 @@ var placeRules = map[string]string{
 	"縁日会場（きゃらグリ）":              "キャラクター縁日会場(1F)",
 }
 
-func CanonicalizePlaceName(source string) string {
+func CanonicalizeVenueName(source string) string {
 	folded := width.Fold.String(source)
-	if replaced, ok := placeRules[folded]; ok {
+	if replaced, ok := venueRules[folded]; ok {
 		return replaced
 	}
 	return folded

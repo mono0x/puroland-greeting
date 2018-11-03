@@ -19,7 +19,7 @@ import (
 
 var (
 	dateRe         = regexp.MustCompile(`(\d+)年(\d+)月(\d+)日(?:\([日月火水木金土]\))?`)
-	timeAndPlaceRe = regexp.MustCompile(`\A\s*([０-９]{1,2})：([０-９]{1,2})－([０-９]{1,2})：([０-９]{1,2})(.+)\s*\z`)
+	timeAndVenueRe = regexp.MustCompile(`\A\s*([０-９]{1,2})：([０-９]{1,2})－([０-９]{1,2})：([０-９]{1,2})(.+)\s*\z`)
 )
 
 type Parser interface {
@@ -150,7 +150,7 @@ func (p *parserImpl) ParseCharacterPage(r io.Reader) (*model.CharacterPage, erro
 
 	items := make([]*model.CharacterPageItem, 0, fonts.Size())
 	fonts.Each(func(_ int, s *goquery.Selection) {
-		submatches := timeAndPlaceRe.FindStringSubmatch(s.Text())
+		submatches := timeAndVenueRe.FindStringSubmatch(s.Text())
 		if len(submatches) != 6 {
 			return
 		}
@@ -163,7 +163,7 @@ func (p *parserImpl) ParseCharacterPage(r io.Reader) (*model.CharacterPage, erro
 		if err != nil {
 			return
 		}
-		startAt := time.Date(date.Year(), date.Month(), date.Day(), startHour, startMinute, 0, 0, date.Location())
+		startTime := time.Date(date.Year(), date.Month(), date.Day(), startHour, startMinute, 0, 0, date.Location())
 
 		endHour, err := strconv.Atoi(norm.NFKC.String(submatches[3]))
 		if err != nil {
@@ -173,14 +173,14 @@ func (p *parserImpl) ParseCharacterPage(r io.Reader) (*model.CharacterPage, erro
 		if err != nil {
 			return
 		}
-		finishAt := time.Date(date.Year(), date.Month(), date.Day(), endHour, endMinute, 0, 0, date.Location())
+		endTime := time.Date(date.Year(), date.Month(), date.Day(), endHour, endMinute, 0, 0, date.Location())
 
-		place := submatches[5]
+		venue := submatches[5]
 
 		items = append(items, &model.CharacterPageItem{
-			Place:    place,
-			StartAt:  startAt,
-			FinishAt: finishAt,
+			Venue:     venue,
+			StartTime: startTime,
+			EndTime:   endTime,
 		})
 	})
 

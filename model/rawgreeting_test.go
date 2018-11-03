@@ -19,9 +19,9 @@ func TestLtsvMarshal(t *testing.T) {
 	finishAt := RawGreetingTime(time.Date(2018, time.October, 26, 15, 30, 0, 0, loc))
 	rawGreeting := &RawGreeting{
 		Character: "キティ・ホワイト",
-		Place:     "館外(他)",
-		StartAt:   &startAt,
-		FinishAt:  &finishAt,
+		Venue:     "館外(他)",
+		StartTime: &startAt,
+		EndTime:   &finishAt,
 	}
 
 	ltsv, err := ltsv.Marshal(rawGreeting)
@@ -46,7 +46,7 @@ func TestLtsvUnmarshal(t *testing.T) {
 	}
 
 	assert.Equal(t, "キティ・ホワイト", rawGreeting.Character)
-	assert.Equal(t, "館外(他)", rawGreeting.Place)
-	assert.WithinDuration(t, time.Date(2018, time.October, 26, 15, 0, 0, 0, loc), time.Time(*rawGreeting.StartAt), 0)
-	assert.WithinDuration(t, time.Date(2018, time.October, 26, 15, 30, 0, 0, loc), time.Time(*rawGreeting.FinishAt), 0)
+	assert.Equal(t, "館外(他)", rawGreeting.Venue)
+	assert.WithinDuration(t, time.Date(2018, time.October, 26, 15, 0, 0, 0, loc), time.Time(*rawGreeting.StartTime), 0)
+	assert.WithinDuration(t, time.Date(2018, time.October, 26, 15, 30, 0, 0, loc), time.Time(*rawGreeting.EndTime), 0)
 }
