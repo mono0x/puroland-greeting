@@ -68,19 +68,13 @@ type CanonicalCharacter struct {
 	Name string
 }
 
-type Style struct {
-	Id                   int64
-	CanonicalCharacterId int64
-	Name                 string
+type VenueCanonicalization struct {
+	VenueId          int64
+	CanonicalVenueId int64
 }
 
 type CharacterCanonicalization struct {
 	CharacterId          int64
 	CanonicalCharacterId int64
-	StyleId              *int64
-}
-
-type VenueCanonicalization struct {
-	VenueId          int64
-	CanonicalVenueId int64
+	Style                string
 }
