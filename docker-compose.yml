@@ -2,17 +2,29 @@ version: '3'
 
 services:
   web:
-    image: golang:latest
+    image: golang:1.11.2
+    depends_on:
+    - wait_for_dependencies
+    - postgres
     working_dir: /go/src/github.com/mono0x/puroland-greeting
     command: go run main.go serve --addr=:8080
+    environment:
+      - DATABASE_URL=postgres://postgres:password@postgres:5432/postgres?sslmode=disable
     volumes:
       - .:/go/src/github.com/mono0x/puroland-greeting
     ports:
       - '8080:8080'
-    depends_on:
-      - postgres
+
   postgres:
     image: postgres:11.1-alpine
-    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
     ports:
-      - '13306:3306'
+      - '5432:5432'
+
+  wait_for_dependencies:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+    - postgres
+    command: postgres:5432

@@ -4,9 +4,10 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
+	"github.com/jmoiron/sqlx"
 )
 
-func NewHandler() http.Handler {
+func NewHandler(db *sqlx.DB) http.Handler {
 	r := chi.NewRouter()
 	r.Get("/", onIndex)
 

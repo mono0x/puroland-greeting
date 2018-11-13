@@ -46,10 +46,11 @@ func onServeCommand(c *cli.Context) error {
 		l = listeners[0]
 	}
 
-	handler, err := injectHandler()
+	handler, cleanup, err := injectHandler()
 	if err != nil {
 		return err
 	}
+	defer cleanup()
 
 	s := http.Server{Handler: handler}
 

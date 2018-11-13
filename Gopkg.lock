@@ -50,12 +50,34 @@
   version = "v0.4.0"
 
 [[projects]]
+  digest = "1:4611e727460d3634059cbe6e0a4799aaeb426ef8150e3b26056c83e1106831c4"
+  name = "github.com/jmoiron/sqlx"
+  packages = [
+    ".",
+    "reflectx",
+  ]
+  pruneopts = ""
+  revision = "d161d7a76b5661016ad0b085869f77fd410f3e6a"
+  version = "v1.2.0"
+
+[[projects]]
   branch = "master"
   digest = "1:1e9ca50ef3425afdb2fd2041606e5d5869d8f5d497742b1b63d9553be852478d"
   name = "github.com/lestrrat/go-server-starter"
   packages = ["listener"]
   pruneopts = ""
   revision = "6ac0b358431b798d3db8933ef547464e4ce74d9d"
+
+[[projects]]
+  digest = "1:29145d7af4adafd72a79df5e41456ac9e232d5a28c1cd4dacf3ff008a217fc10"
+  name = "github.com/lib/pq"
+  packages = [
+    ".",
+    "oid",
+  ]
+  pruneopts = ""
+  revision = "4ded0e9383f75c197b3a2aaa6d590ac52df6fd79"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:7365acd48986e205ccb8652cc746f09c8b7876030d53710ea6ef7d0bd0dcd7ca"
@@ -128,7 +150,9 @@
     "github.com/Songmu/go-ltsv",
     "github.com/go-chi/chi",
     "github.com/google/go-cloud/wire",
+    "github.com/jmoiron/sqlx",
     "github.com/lestrrat/go-server-starter/listener",
+    "github.com/lib/pq",
     "github.com/pkg/errors",
     "github.com/stretchr/testify/assert",
     "github.com/urfave/cli",

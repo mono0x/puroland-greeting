@@ -48,3 +48,7 @@
 [[constraint]]
   branch = "master"
   name = "github.com/Songmu/go-ltsv"
+
+[[constraint]]
+  name = "github.com/jmoiron/sqlx"
+  version = "1.2.0"

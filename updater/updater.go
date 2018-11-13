@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/Songmu/go-ltsv"
+	"github.com/jmoiron/sqlx"
+
 	"github.com/mono0x/puroland-greeting/scraping"
 )
 
@@ -13,11 +15,13 @@ type Updater interface {
 
 type updaterImpl struct {
 	walker scraping.Walker
+	db     *sqlx.DB
 }
 
-func NewUpdater(walker scraping.Walker) Updater {
+func NewUpdater(walker scraping.Walker, db *sqlx.DB) Updater {
 	return &updaterImpl{
 		walker: walker,
+		db:     db,
 	}
 }
 
@@ -34,6 +38,5 @@ func (u *updaterImpl) Update() error {
 		}
 		fmt.Println(string(dump))
 	}
-
 	return nil
 }

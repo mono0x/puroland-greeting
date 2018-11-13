@@ -13,6 +13,7 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "puroland-greeting"
 	app.Commands = []cli.Command{
+		command.NewImportCommand(),
 		command.NewServeCommand(),
 		command.NewUpdateCommand(),
 	}
