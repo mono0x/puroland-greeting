@@ -4,6 +4,7 @@ go:
 - 1.11.x
 before_install:
 - go get github.com/twitchtv/retool
+install: true
 before_script:
 - retool do wire ./command
 - retool do go generate -v ./...
