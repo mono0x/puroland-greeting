@@ -5,7 +5,7 @@ go:
 before_install:
 - go get github.com/twitchtv/retool
 install:
-- GO111MODULE=on go mod vendor
+- GO111MODULE=on go get -v -mod=vendor ./...
 before_script:
 - retool do wire ./command
 - retool do go generate -v ./...
