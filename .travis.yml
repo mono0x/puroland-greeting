@@ -3,10 +3,7 @@ sudo: false
 go:
 - 1.11.x
 before_install:
-- go get github.com/golang/dep/cmd/dep
 - go get github.com/twitchtv/retool
-install:
-- dep ensure
 before_script:
 - retool do wire ./command
 - retool do go generate -v ./...
@@ -22,5 +19,4 @@ notifications:
   on_success: change
   on_failure: always
 env:
-  global:
-    secure: IdtfzIXMu8jt+hCauL4kusndLpLxp3BX/0Hcfi2oqRxA0shRsZJNEgRv4c+3a/YpNeWBou4Y3tIi95rovF4pA/DjWXy1dTfd6qZKi8aLbUbYvQ0zmB6eKGCaO1r/cl933cmsMscpAyUJP25j2dvxExDgv26t+OPctZnGk0nxz/jrfaexhIQWQXbLMFwRYE8c4dlTS0rkVokFAj3QF3d8nOZZyKZ/9rVFYMRjzrG2TE1253kfpaQK16xG3nVPN6EMsTrNDZlIw6qZt9dc2Lmgshc9qqI8rBhby54IFJRnC4vJxiq/40OdDd0NPTWSM/U+inb8VJXcnNWXMx3QX69L36aNIqVDxEMHKHNDljNCs3K6+fA04dof64wsvRCvKmOAyPoawppNGRENsScNbeLGNVcobXUMwHaAE5K0e5iHkpzBUzQxHcwccusUSzZhR9k3VZX2g8t5FxwV1skTQ4FXovq8SgapM5pRxazsSMzNZ5S9dUR0vKbF9wfMWPX8f4yOTwRT1XvlkKFkjnNb+ckCTZQuSwysGNG4Y9OkeB90CUZvio9Jn3LTYnoSSEfHbpSC4r8F8zfPfLrJm54Cw73gpVvUZ25OP5v8erWcJrG28NQ0IkSVe8XMjDAkJTkjlsO4qWCAr2R/Laba6k0msCwcNGIY9fIqA1ZjmtlHnnVe60I=
+- GO111MODULE=on
